@@ -18,3 +18,4 @@ unless Enemy.any?
   third_enemy = Enemy.create!(name: "Третий враг", hp: 700)
 end
 
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

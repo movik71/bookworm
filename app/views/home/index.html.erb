@@ -1,6 +1,10 @@
 Bookworm
 Стартовая страница
 
+<div>
+  <%= link_to "Войти", "/home/account" %>
+</div>
+
 <% @words.each do |word| %>
   <div class="word">
     <%= word.text %>
