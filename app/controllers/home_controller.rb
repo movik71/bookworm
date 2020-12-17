@@ -4,8 +4,8 @@ class HomeController < ApplicationController
     @words = Word.all
   end
 
-  def log_in
-
+  def start
+    redirect_to action: 'game#start'
   end
 
 end

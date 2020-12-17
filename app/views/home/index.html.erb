@@ -1,12 +1,3 @@
-Bookworm
-Стартовая страница
-
-<div>
-  <%= link_to "Войти", "/home/account" %>
+<div >
+  <%= button_to "Начать игру", "/game", :method => :get, class:"game_button" %>
 </div>
-
-<% @words.each do |word| %>
-  <div class="word">
-    <%= word.text %>
-  </div>
-<% end %>

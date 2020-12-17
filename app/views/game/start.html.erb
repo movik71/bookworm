@@ -1,0 +1,13 @@
+<div class="letters">
+  <div class="container">
+    <% (0..3).each { |i| %>
+      <div class="row">
+      <%  @letters.slice(i*5, 5).each { |letter|  %>
+        <div class="card">
+          <div class="card-text"><%=  letter  %></div>
+        </div>
+        <%  } %>
+      </div>
+    <%  } %>
+  </div>
+</div>
