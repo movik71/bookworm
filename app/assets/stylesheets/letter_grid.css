@@ -26,3 +26,9 @@
 .card-text {
     display: block;
 }
+
+.word {
+    width: 520px;
+    height: 416px;
+    border: 2px solid black;
+}
