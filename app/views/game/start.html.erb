@@ -2,27 +2,28 @@
   <%= render partial: 'word', object: @current_word %>
 <% end %>
 
-<% letters_to_numbers = { 'А' => "1", 'Б' => "2", 'В' => "3", 'Г' => "4", 'Д' => "5", 'Е' => "6",
-                    'Ё' => "7", 'Ж' => "8", 'З' => "9", 'И' => "10", 'Й' => "11", 'К' => "12",
-                    'Л' => "13", 'М' => "14", 'Н' => "15", 'О' => "16", 'П' => "17", 'Р' => "18",
-                    'С' => "19", 'Т' => "20", 'У' => "21", 'Ф' => "22", 'Х' => "23", 'Ц' => "24",
-                    'Ч' => "25", 'Ш' => "26", 'Щ' => "27", 'Ъ' => "28", 'Ы' => "29", 'Ь' => "30",
-                    'Э' => "31", 'Ю' => "32", 'Я' => "33" } %>
-
 <div class="letters">
+  <% curr = "" %>
+  <% if @current_word.present? %>
+    <%  curr = @current_word %>
+  <% end %>
+  <% taken = "" %>
+  <% if @taken.present? %>
+    <%  taken = @taken %>
+  <% end %>
   <div class="container">
     <% (0..3).each { |i| %>
       <div class="row">
       <%  @letters.slice(i*5, 5).each { |letter|  %>
         <div class="card">
-          <% curr = "" %>
-          <% if @current_word.present? %>
-            <%  @current_word.split("").each { |l|  %>
-              <% curr = curr + letters_to_numbers[l] + "-" %>
-            <%  } %>
-          <% end %>
-          <%= link_to "game/add_letter/#{curr}/#{letters_to_numbers[letter]}" do %>
-          <div class="card-text"><%=  letter  %></div>
+          <% l = letter.split("i") %>
+          <% t = taken.split("-") %>
+          <% if t.include? l[1] %>
+            <div class="card-text"><%=  l[0]  %></div>
+          <% else %>
+            <%= link_to "game/add_letter/#{curr}/#{@letters_to_numbers[l[0]]}i#{l[1]}/#{taken}" do %>
+              <div class="card-text"><%=  l[0]  %></div>
+            <% end %>
           <% end %>
         </div>
         <%  } %>
