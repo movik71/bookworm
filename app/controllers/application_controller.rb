@@ -1,9 +1,8 @@
-include Devise::Controllers::Helpers
-
 class ApplicationController < ActionController::Base
+  include Devise::Controllers::Helpers
+
   protect_from_forgery with: :exception
 
-  before_action :authenticate_user!
   before_action :update_allowed_parameters, if: :devise_controller?
 
   protected
