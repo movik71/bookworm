@@ -2,6 +2,21 @@
   <%= render partial: 'word', object: @current_word %>
 <% end %>
 
+<% if @current_word.present? %>
+  <div>
+    <%= button_to "Атаковать", "/game/#{@letters}/#{@current_word}", :method => :post, class:"attack_button" %>
+  </div>
+<% end %>
+
+<% if @attack_power.present? %>
+  <div class="attack_text">
+    <%= "Сила вашей атаки: " + @attack_power.to_s %>
+  </div>
+  <div>
+    <%= button_to "Продолжить", "/game", :method => :post, class:"attack_button" %>
+  </div>
+<% end %>
+
 <div class="letters">
   <% curr = "" %>
   <% if @current_word.present? %>
@@ -14,15 +29,15 @@
   <div class="container">
     <% (0..3).each { |i| %>
       <div class="row">
-      <%  @letters.slice(i*5, 5).each { |letter|  %>
+      <%  @letters.split("-").slice(i*5, 5).each { |letter|  %>
         <div class="card">
           <% l = letter.split("i") %>
           <% t = taken.split("-") %>
-          <% if t.include? l[1] %>
-            <div class="card-text"><%=  l[0]  %></div>
+          <% if t.include? l[1] or @attack_power.present? %>
+            <div class="card-text"><%=  @numbers_to_letters[l[0]]  %></div>
           <% else %>
-            <%= link_to "game/add_letter/#{curr}/#{@letters_to_numbers[l[0]]}i#{l[1]}/#{taken}" do %>
-              <div class="card-text"><%=  l[0]  %></div>
+            <%= link_to "game/add_letter/#{@letters}/#{curr}/#{l[0]}i#{l[1]}/#{taken}" do %>
+              <div class="card-text"><%=  @numbers_to_letters[l[0]]  %></div>
             <% end %>
           <% end %>
         </div>

@@ -20,7 +20,39 @@
     margin-left: -100px;
 }
 
+.attack_button {
+    width: 200px;
+    height: 50px;
+    border: 2px solid black;
+    color: black;
+    position: fixed;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    top: 45%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -100px;
+}
+
 .game_button:hover {
     background: orange;
+}
+
+.attack_button:hover {
+    background: orange;
+}
+
+.attack_text {
+    color: black;
+    position: fixed;
+    font-size: 22px;
+    text-align: justify;
+    line-height: 50px;
+    top: 36%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -100px;
 }
 

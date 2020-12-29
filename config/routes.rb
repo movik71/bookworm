@@ -7,9 +7,10 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get '/account', to: 'home#log_in'
   post '/game', to: 'game#start'
+  post '/game/:letters/:word', to: 'game#start'
   get '/game', to: 'game#start'
-  get '/game/add_letter/:letter', to: 'game#add_letter'
-  get '/game/add_letter/:curr/:letter/:taken', to: 'game#add_letter'
-  get '/game/delete_letter/:curr/:letter/:taken', to: 'game#delete_letter'
+  get '/game/add_letter/:letters/:letter', to: 'game#add_letter'
+  get '/game/add_letter/:letters/:curr/:letter/:taken', to: 'game#add_letter'
+  get '/game/delete_letter/:letters/:curr/:letter/:taken', to: 'game#delete_letter'
 
 end

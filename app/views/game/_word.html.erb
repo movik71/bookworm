@@ -1,4 +1,4 @@
-<div class="word">
+<div class="new_word">
   <% curr = "" %>
   <% if @current_word.present? %>
     <%  curr = @current_word %>
@@ -11,7 +11,7 @@
     <%  word.split("-").each { |letter|  %>
       <div class="card">
         <% numbers = letter.split("i") %>
-        <%= link_to "game/delete_letter/#{curr}/#{numbers[0]}i#{numbers[1]}/#{taken}" do %>
+        <%= link_to "game/delete_letter/#{@letters}/#{curr}/#{numbers[0]}i#{numbers[1]}/#{taken}" do %>
           <div class="card-text"><%=  @numbers_to_letters[numbers[0]]  %></div>
         <% end %>
       </div>

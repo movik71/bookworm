@@ -14,9 +14,40 @@ class GameController < ApplicationController
                          'Ч' => "25", 'Ш' => "26", 'Щ' => "27", 'Ъ' => "28", 'Ы' => "29", 'Ь' => "30",
                          'Э' => "31", 'Ю' => "32", 'Я' => "33" }
 
+  LETTERS_ATTACK_POWER = { 'А' => 5, 'Б' => 8, 'В' => 6, 'Г' => 8, 'Д' => 7, 'Е' => 5,
+                         'Ё' => 10, 'Ж' => 9, 'З' => 8, 'И' => 5, 'Й' => 9, 'К' => 6,
+                         'Л' => 6, 'М' => 7, 'Н' => 5, 'О' => 5, 'П' => 7, 'Р' => 6,
+                         'С' => 6, 'Т' => 6, 'У' => 7, 'Ф' => 10, 'Х' => 9, 'Ц' => 9,
+                         'Ч' => 9, 'Ш' => 9, 'Щ' => 10, 'Ъ' => 10, 'Ы' => 8, 'Ь' => 8,
+                         'Э' => 10, 'Ю' => 9, 'Я' => 7 }
+
+  LETTERS_WITH_FREQUENCY = [ 'А', 'А', 'А', 'А', 'А', 'А', 'Б', 'Б', 'Б', 'В', 'В', 'В', 'В', 'В',
+                             'Г', 'Г', 'Г', 'Д', 'Д', 'Д', 'Д', 'Е', 'Е', 'Е', 'Е', 'Е', 'Е', 'Ё', 'Ж',
+                             'Ж', 'З', 'З', 'З', 'И', 'И', 'И', 'И', 'И', 'И', 'Й', 'Й', 'К', 'К', 'К',
+                             'К', 'К', 'Л', 'Л', 'Л', 'Л', 'Л', 'М', 'М', 'М', 'М', 'Н', 'Н', 'Н', 'Н',
+                             'Н', 'Н', 'О', 'О', 'О', 'О', 'О', 'О', 'П', 'П', 'П', 'П', 'Р', 'Р', 'Р',
+                             'Р', 'Р', 'С', 'С', 'С', 'С', 'С', 'Т', 'Т', 'Т', 'Т', 'Т', 'Т', 'У', 'У',
+                             'У', 'У', 'Ф', 'Х', 'Х', 'Ц', 'Ц', 'Ч', 'Ч', 'Ш', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ы',
+                             'Ы', 'Ь', 'Ь', 'Ь', 'Э', 'Ю', 'Ю', 'Я', 'Я', 'Я', 'Я' ]
+
   def start
-    @letters = ["Аi1", "Мi2", "Уi3", "Лi4", "Кi5", "Оi6", "Аi7", "Рi8", "Пi9", "Оi10", "Еi11", "Нi12",
-                "Дi13", "Еi14", "Сi15", "Кi16", "Иi17", "Ьi18", "Тi19", "Сi20" ]
+    #@letters = ["Аi1", "Мi2", "Уi3", "Лi4", "Кi5", "Оi6", "Аi7", "Рi8", "Пi9", "Оi10", "Еi11", "Нi12",
+    # "Дi13", "Еi14", "Сi15", "Кi16", "Иi17", "Ьi18", "Тi19", "Сi20" ]
+    if params[:word].present?
+      @attack_power = 0
+      params[:word].split("-").each do |letter|
+        l = NUMBERS_TO_LETTERS[letter.split("i")[0]]
+        @attack_power += LETTERS_ATTACK_POWER[l]
+      end
+    end
+    if params[:letters].present?
+      @letters = params[:letters]
+    else
+      @letters = ""
+      (1..20).each { |i|
+        @letters = @letters + LETTERS_TO_NUMBERS[LETTERS_WITH_FREQUENCY.sample].to_s + "i" + i.to_s + "-"
+      }
+    end
     if params[:curr].present?
       @current_word = params[:curr]
     end
@@ -30,6 +61,7 @@ class GameController < ApplicationController
   end
 
   def add_letter
+    @letters = params[:letters]
     l = params[:letter].split("i")
     if params[:taken].present?
       @taken = params[:taken] +  l[1] + "-"
@@ -44,21 +76,22 @@ class GameController < ApplicationController
     else
       @current_word += l[0] + "i" + l[1] + "-"
     end
-    redirect_to action: 'start', curr:@current_word, taken:@taken
+    redirect_to action: 'start', letters:@letters, curr:@current_word, taken:@taken
   end
 
   def delete_letter
     letter = params[:letter]
+    @letters = params[:letters]
     @current_word = params[:curr]
     @taken = params[:taken]
     pos_curr = @current_word.index(letter)
     if pos_curr == 0
-      redirect_to action: 'start'
+      redirect_to action: 'start', letters:@letters
     else
       pos_taken = @taken.index(letter.split("i")[1])
       @current_word = @current_word.slice(0..pos_curr - 1)
       @taken = @taken.slice(0..pos_taken - 1)
-      redirect_to action: 'start', curr:@current_word, taken:@taken
+      redirect_to action: 'start', letters:@letters, curr:@current_word, taken:@taken
     end
   end
 

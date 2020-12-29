@@ -22,7 +22,6 @@
     font-size: 40px;
     font-family: "Open Sans", sans-serif;
 }
-
 .card-text {
     display: block;
 }
@@ -30,5 +29,17 @@
 .word {
     width: 520px;
     height: 416px;
+    border: 2px solid black;
+}
+
+.new_word {
+    position: absolute;
+    right:25%;
+    left:25%;
+    top:25%;
+    margin-left: -250px;
+    margin-block: 0;
+    width: 1560px;
+    height: 104px;
     border: 2px solid black;
 }
